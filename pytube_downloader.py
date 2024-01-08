@@ -6,4 +6,4 @@ def download_audio(link):
 
     stream= youtube.streams.filter(only_audio=True)
 
-    stream[0].download("D:\\Programas\\PyTube\\")
+    stream[0].download("path")
