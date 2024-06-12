@@ -3,6 +3,9 @@ from tkinter import *
 from ttkbootstrap.constants import *
 import ttkbootstrap as tb 
 
+def updateButtonText():
+    downloadButton.configure(text=f"Download {option_var.get()}")
+
 def download():
     link = videoInput.get()
     match option_var.get():
@@ -40,16 +43,17 @@ videoLabel.pack()
 
 videoInput = Entry(root, width=100)
 videoInput.pack()
+option_var = StringVar(value="Audio")
 
-downloadButton = tb.Button(root, text="Download Audio", padding=(10,10),command=download)
+downloadButton = tb.Button(root, text=f"Download {option_var.get()}", padding=(10,10),command=download)
 downloadButton.pack()
 
 downloadOptionsButton = tb.Menubutton(text="Choose download options")
 optionsMenu = tb.Menu(downloadOptionsButton)
-option_var = StringVar(value="Audio")
-optionsMenu.add_radiobutton(label="Audio only",value="Audio",variable=option_var)
-optionsMenu.add_radiobutton(label="Video Only",value="Video",variable=option_var)
-optionsMenu.add_radiobutton(label="Both",value="Both",variable=option_var)
+
+optionsMenu.add_radiobutton(label="Audio only",value="Audio",variable=option_var, command=updateButtonText)
+optionsMenu.add_radiobutton(label="Video Only",value="Video",variable=option_var, command=updateButtonText)
+optionsMenu.add_radiobutton(label="Both",value="Both",variable=option_var, command=updateButtonText)
 downloadOptionsButton['menu'] = optionsMenu
 
 downloadOptionsButton.pack()
@@ -75,7 +79,7 @@ except FileNotFoundError:
             history.write("")
             history.close()
 
-    
+
 
 historyListBox.pack()
 
